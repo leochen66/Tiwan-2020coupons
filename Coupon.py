@@ -1,6 +1,16 @@
+# @ file Coupon.py
+# @ brief Class Coupon Implementation
+
+# Class Coupon contain four method get_farm(), get_efun(), get_don(), get_hakka()
+# each method do http request to get data from website, return a dictionary as well ae write to json file
+
+# @ auther Leo Chen
+# @ date 2020/07/24
+
 from bs4 import BeautifulSoup
 import requests
 import json
+import os
 
 class Coupon(object):
 
@@ -32,6 +42,10 @@ class Coupon(object):
 			new_json['website'] = ''
 
 			data_farm['data'].append(new_json)
+
+		# write as json file
+		with open(os.path.join('data', 'farm'), 'w', encoding='utf-8') as f:
+			json.dump(data_farm, f, ensure_ascii=False)
 
 		return data_farm
 		
@@ -72,6 +86,10 @@ class Coupon(object):
 
 			data_efun['data'].append(new_json)
 
+		# write as json file
+		with open(os.path.join('data', 'efun'), 'w', encoding='utf-8') as f:
+			json.dump(data_efun, f, ensure_ascii=False)
+
 		return data_efun
 
 
@@ -111,6 +129,10 @@ class Coupon(object):
 				new_json['website'] = store_info.select('.mb-0')[3].select('a')[0].text
 
 				data_don['data'].append(new_json)
+
+		# write as json file
+		with open(os.path.join('data', 'don'), 'w', encoding='utf-8') as f:
+			json.dump(data_don, f, ensure_ascii=False)
 
 		return data_don
 
@@ -154,5 +176,9 @@ class Coupon(object):
 					new_json['website'] = ''
 
 					data_hakka['data'].append(new_json)
+
+		# write as json file
+		with open(os.path.join('data', 'hakka'), 'w', encoding='utf-8') as f:
+			json.dump(data_hakka, f, ensure_ascii=False)
 
 		return data_hakka
