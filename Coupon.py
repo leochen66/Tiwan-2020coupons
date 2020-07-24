@@ -25,6 +25,7 @@ class Coupon(object):
 
 	def get_farm(this):
 
+		print('Excuting get_farm...')
 		data_farm = { 'data': [] }
 
 		# http request with header
@@ -52,6 +53,7 @@ class Coupon(object):
 
 	def get_efun(this):
 
+		print('Excuting get_efun...')
 		data_efun = { 'data': [] }
 
 		# get the number of stores
@@ -70,14 +72,15 @@ class Coupon(object):
 		# get the whole store data
 		payload_data['pageSize'] = store_count
 		stores = requests.post(this.url_efun, data=json.dumps(payload_data),headers=headers).json()['result']
-
+		
 		# reorganize the data and pick critical data
 		for store in stores:
 			new_json = {}
 			new_json['name'] = store['culName']
 			new_json['address'] = store['city'] + store['area'] + store['address']
-			new_json['tel'] = store['tel'].replace('-', '')
-
+			# handle tel==None situation
+			if store['tel'] != None:
+				new_json['tel'] = store['tel'].replace('-', '')
 			# if there is no website, replace by facebook link
 			if store['website'] == '':
 				new_json['website'] = store['fb']
@@ -95,6 +98,7 @@ class Coupon(object):
 
 	def get_don(this):
 
+		print('Excuting get_don, it may take a few minutes...')
 		data_don = { 'data': [] }
 
 		headers = {
@@ -139,6 +143,7 @@ class Coupon(object):
 
 	def get_hakka(this):
 
+		print('Excuting get_hakka, it may take a few minutes...')
 		data_hakka = { 'data': [] }
 
 		headers = {
